@@ -1,1 +1,18 @@
-Hello World
+---
+layout: default
+title: Blog
+---
+
+<ul>
+  {% for post in site.posts %}
+    <article class="blog-post">
+      <h1 class="post-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+      <p>{{ post.content }}</p>
+      <p>
+        <em>
+          Written by {{ post.author }} on {{ post.date | date: '%B %e, %Y' }}
+        </em>
+      </p>
+    </article>
+  {% endfor %}
+</ul>

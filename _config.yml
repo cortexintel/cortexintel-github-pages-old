@@ -1,0 +1,4 @@
+highligher: pygments
+markdown: kramdown
+permalink: /blog/:year/:month/:title
+timezone: America/New_York
