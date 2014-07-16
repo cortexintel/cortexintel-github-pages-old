@@ -6,13 +6,15 @@ title: Blog
 <ul>
   {% for post in site.posts %}
     <article class="blog-post">
-      <h1 class="post-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+      <header class="post-metadata">
+        <h1 class="post-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+        <span class="octicon octicon-light-bulb"></span>
+        <span class="post-author">by {{ post.author }}</span> 
+        <span class="octicon octicon-calendar"></span>
+        <span class="post-posted-date">{{ post.date | date: '%B %e, %Y' }}</span>
+      </header>
+
       <p>{{ post.content }}</p>
-      <p>
-        <em>
-          Written by {{ post.author }} on {{ post.date | date: '%B %e, %Y' }}
-        </em>
-      </p>
     </article>
   {% endfor %}
 </ul>
