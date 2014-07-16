@@ -1,7 +1,7 @@
 ---
 author: Geoff Harcourt
 categories: talks dcrug 
-layout: default
+layout: post
 title: 'DC Ruby Talk: Environment Parity'
 ---
 

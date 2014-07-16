@@ -5,7 +5,7 @@ categories:
 - rails assets
 - bower
 - asset pipeline
-layout: default
+layout: post
 ---
 
 [Bower](http://bower.io) is a dependency manager created by Twitter. Like Ruby's

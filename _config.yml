@@ -1,3 +1,4 @@
+future: false
 highligher: pygments
 markdown: kramdown
 permalink: /blog/:year/:month/:title
