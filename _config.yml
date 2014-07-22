@@ -4,4 +4,4 @@ markdown: kramdown
 name: Cortex Engineering Blog
 permalink: /blog/:year/:month/:title
 timezone: America/New_York
-url: http://blog.cortexintel.io
+url: http://blog.cortexintel.com
