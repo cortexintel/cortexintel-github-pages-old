@@ -1,5 +1,7 @@
 future: false
 highligher: pygments
 markdown: kramdown
+name: Cortex Engineering Blog
 permalink: /blog/:year/:month/:title
 timezone: America/New_York
+url: http://blog.cortexintel.io
