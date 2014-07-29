@@ -1,6 +1,6 @@
 ---
 author: Geoff Harcourt
-author_twitter: @geoffharcourt
+author_twitter: "@geoffharcourt"
 categories: open-source gems
 layout: post
 title: 'Cortex in Open Source: parity'

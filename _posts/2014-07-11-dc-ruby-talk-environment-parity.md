@@ -1,6 +1,6 @@
 ---
 author: Geoff Harcourt
-author_twitter: @geoffharcourt
+author_twitter: "@geoffharcourt"
 categories: talks dcrug 
 layout: post
 title: 'DC Ruby Talk: Environment Parity'
