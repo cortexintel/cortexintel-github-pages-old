@@ -1,5 +1,6 @@
 ---
 author: Geoff Harcourt
+author_twitter: "@geoffharcourt"
 categories:
 - rails
 - rails assets
