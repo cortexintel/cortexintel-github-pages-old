@@ -62,12 +62,12 @@ even those lengthened or shortened by daylight savings changes.
 class Cortex.Graph.FixedLocalTimeFormatter
   constructor: (@presentedTimeZone) ->
 
-  format: (momentFormat) =>
+  format: (momentFormattedTime) =>
     (d) =>
       moment.
         tz(d, Cortex.Utilities.browser_current_time_zone()).
         tz(@presentedTimeZone).
-        format(momentFormat)
+        format(momentFormattedTime)
 
   localMidnight: (data) =>
     earliestTimeInSet = d3.min data, (d) ->
@@ -84,6 +84,7 @@ class Cortex.Graph.FixedLocalTimeFormatter
     xTickValues = for hour in [0, 4, 8, 12, 16, 20]
       @localMidnight(data).clone().hours(hour)
 
+    # Add the following midnight to end the day
     xTickValues.push(@localMidnight(data).clone().add(1, "days"))
     xTickValues
 {% endhighlight %}
@@ -100,6 +101,25 @@ changes. Note that we're using doing something that looks laborious in our list
 comprehension with Moment's `clone()` method because Moment time objects are
 mutable, so adding a value or changing a characteristic of the object changes it
 everywhere that the object is referenced.
+
+We call this code in our chart classes when we perform tasks like generate
+labels, tooltips, or ticks. Here's our x-axis generation code:
+
+{% highlight coffee %}
+
+  # Base time-series chart
+  _fixedLocalTimeZoneFormatter: =>
+    new Cortex.Graph.FixedLocalTimeFormatter(@_timeZone())
+
+  _drawXAxis: =>
+    xAxis = d3.svg.axis()
+    .scale(xScale)
+    .orient('bottom')
+    .tickValues(@_fixedLocalTimeZoneFormatter().ticksForDataSet(@_ticksForDataSet()))
+    .tickFormat(@_fixedLocalTimeZoneFormatter().format("h A"))
+    ...
+
+{% endhighlight %}
 
 Building a small class of our own rather than bolting a huge new function on to
 D3 resulted in much less code to write, no monkey-patching or other
