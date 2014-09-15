@@ -6,15 +6,21 @@ layout: post
 title: 'Plotting data with non-local timezones in D3.js'
 ---
 
-[D3](http://d3js.org) is a versatile JavaScript library for building
-visualizations in HTML and SVG from data. At Cortex, D3 is used on every page in
-our dashboards to display metrics and recommendations to our users. Soon after
-our launch, we noticed a problem when we viewed data about buildings in New York
-from computers in California: all of our charts for New York buildings displayed
-times as Pacific Standard Time (PST) rather than New York's Eastern Standard
-Time (EST). While one could argue that it's nice to see data translated into
-your own time zone wherever you are, it's not convenient to think about building
-operations remotely from a time zone that differs from the building's own.
+[D3](http://d3js.org) is a versatile JavaScript library for building data-driven
+visualizations in HTML and SVG. At Cortex, we use D3 on every page in our
+dashboards to display metrics and recommendations to our users, often layering
+two different but related pieces of data in the same chart to provide insight to
+users. D3 is an incredibly powerful and flexible library, but that power comes
+with a steeper learning curve relative to some other charting solutions.
+
+Soon after Cortex's launch, we noticed a problem when we viewed data about
+buildings in New York from computers in California that had never surfaced in
+our automated testing or manual QA efforts: all of our charts for New York
+buildings displayed times on data points or X-axis tick marks as Pacific
+Standard Time (PST) rather than New York's Eastern Standard Time (EST). While
+one could argue that it's nice to see data translated into your own time zone
+wherever you are, it's not convenient to think about building operations
+remotely from a time zone that differs from the building's own.
 
 I was initially confused about this behavior, as we output times from our chart
 data API in [Coordinated Universal Time
@@ -26,23 +32,24 @@ research, I found that D3's linear scale for time can support times in the
 user's local time zone or UTC, but does not support fixing a linear time scale
 to a different time zone, even if the data is marked with a different time zone.
 
-My first hacky attempt at a solution was to get the user's timezone from the
-browser and submit it with the API request for chart data, compute the
-offset with in Ruby, and then feed data back to the
-charts with "fake" times that would make the chart's output appear to be on the
-correct times, essentially changing the listed timezone for our data from EST to
-PST without changing the times themselves. This behavior would probably work in
-most cases, but it felt inelegant and was likely to produce problems whenever
-time zones didn't follow the same daylight savings rules. This approach also
-produced undesired locations for tick marks for the hours in the day, as D3's
-"intelligent" tick values builder would dutifully mark off times every four hours,
-but rather than starting at midnight, it would begin at 3am.
+My first attempt at a solution was to get the user's timezone from the browser
+and submit it with the API request for chart data, compute the offset with in
+Ruby, and then feed data back to the charts with "fake" times that would make
+the chart's output appear to be on the correct times, essentially changing the
+listed timezone for our data from EST to PST without changing the times
+themselves. This behavior would probably work in most cases, but it felt
+inelegant and was likely to produce problems whenever time zones didn't follow
+the same daylight savings rules. This approach also produced undesired locations
+for tick marks for the hours in the day, as D3's "intelligent" tick values
+builder would dutifully mark off times every four hours, but rather than
+starting at midnight, it would begin at 3am.
 
 Our next attempt at solving the problem was to build our own D3 time scale that
 would run alongside D3's `time.scale()` and `time.scale.utc()`. I still believe
 this approach may be in our future, but after an initial code spike, it appeared
-to be overkill for what we needed. D3's scales are complicated functions with
-many moving parts.
+to be overkill for what we needed to accomplish immediately. D3's scales are
+complicated functions with many moving parts, and writing and testing all the
+parts of a new time scale type was going to be arduous.
 
 The solution we arrived was a small Coffeescript formatter class that could
 translate the displayed time for axis ticks or line points from the user's local
