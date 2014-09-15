@@ -117,7 +117,8 @@ labels, tooltips, or ticks. Here's our x-axis generation code:
     .orient('bottom')
     .tickValues(@_fixedLocalTimeZoneFormatter().ticksForDataSet(@_ticksForDataSet()))
     .tickFormat(@_fixedLocalTimeZoneFormatter().format("h A"))
-    ...
+
+    # draw the axis and apply to the chart...
 
 {% endhighlight %}
 
