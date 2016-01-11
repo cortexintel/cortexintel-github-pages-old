@@ -11,6 +11,8 @@ title: "Data Science at Cortex: Bringing Intelligence to Towers"
 
 Cortex's vision is to use data-science to make commercial building operations more efficient.  Over the next few posts we want to give readers a "look under the hood" of our data-science operations.  To that end, we'll discuss how we solved one of the foundational problems at Cortex: figuring out when a building's heating, ventilation, and air conditioning (aka HVAC) systems were turned on.
 
+<!--break-->
+
 ## Motivation
 
 This problem is important because HVAC is the biggest consumer of energy (i.e. money and emissions) in day to day building operations.  Most buildings have a lease obligations that require the inside air to be within a certain temperature range by a certain time, e.g. between 72-76 degrees by 8am during the week.  The key to efficiency is to turn on the HVAC systems just in time so that the building reaches the right temperature by the lease obligation time.  You don't want it late -- because then tenants (who pay a lot in rent) will complain it's too cold/too hot.  But you don't want it too early either -- because then the building ends up wasting energy and money.  Optimizing the start time to be just right can create hundreds of thousands of dollars of savings over the course of the year for a single building.  It's no joke. 

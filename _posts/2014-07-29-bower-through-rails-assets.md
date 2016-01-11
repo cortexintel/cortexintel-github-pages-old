@@ -17,6 +17,8 @@ delivered (working out which versions of which packages are compatible with the
 other packages you have installed). While Bundler manages Ruby dependencies,
 Bower manages web assets such as JavaScript, CSS, or fonts. 
 
+<!--break-->
+
 Bower can
 be integrated with the [Rails Asset
 Pipeline](http://guides.rubyonrails.org/asset_pipeline.html), making managed

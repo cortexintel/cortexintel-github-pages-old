@@ -5,3 +5,4 @@ name: Cortex Engineering Blog
 permalink: /blog/:year/:month/:title
 timezone: America/New_York
 url: http://blog.cortexintel.com
+excerpt_separator: <!--break-->

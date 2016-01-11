@@ -13,6 +13,8 @@ two different but related pieces of data in the same chart to provide insight to
 users. D3 is an incredibly powerful and flexible library, but that power comes
 with a steeper learning curve relative to some other charting solutions.
 
+<!--break-->
+
 Soon after Cortex's launch, we noticed a problem when we viewed data about
 buildings in New York from computers in California that had never surfaced in
 our automated testing or manual QA efforts: all of our charts for New York

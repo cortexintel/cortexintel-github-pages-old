@@ -4,10 +4,10 @@ layout: default
 title: Cortex Engineering Blog
 ---
 
-
 <ul>
   {% for post in site.posts %}
-    {% assign content = post.content %}
+    {% assign content = post.excerpt %}
     {% include post.html %}
+    <a class="readmore" href="{{ post.url }}">Read more</a>
   {% endfor %}
 </ul>

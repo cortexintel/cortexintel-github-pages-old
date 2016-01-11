@@ -17,6 +17,8 @@ review on the staging server, and once those changes are approved, we deploy the
 code to our production and demonstration environments. (Have you been counting?
 That's six environments: development, test, CI, staging, production, and demo.)
 
+<!--break-->
+
 We use the [`parity`](http://github.com/croaky/parity) gem to manage interaction
 with our three Heroku environments. Parity creates shell commands for
 `production` and `staging` that pass arguments through to the `heroku` command

@@ -14,6 +14,8 @@ than treating third-party libraries as a mysterious black box, reading a
 library's source allows you to both troubleshoot unexpected issues in your use of
 others' code and to learn from the authors' techniques.
 
+<!--break-->
+
 When I encounter a problem that I've traced back to a gem I'm using in my
 application, I like to do two things: browse the issues filed against the gem on
 Github to see if someone else has reported a similar problem, and to read the
