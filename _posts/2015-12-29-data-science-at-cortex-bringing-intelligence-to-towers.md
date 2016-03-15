@@ -31,20 +31,21 @@ In fact I think most data scientists don't do enough data exploration.  Even now
 
 Anyways, now I'm ranting.  Let's look at some data instead.  Here's a plot of all the sensor data from a large commercial building on a weeknight.  The time range shown is from 8:00 PM the day before to 8:00 AM in the morning, which is the lease obligation start time.  There are four types of sensors in this particular building that we're focused on when identifying when the HVAC systems started up: (1) supply air temperature (SAT), (2) static pressure (in the air handler units), (3) electric demand, and (4) steam demand.  Each type is shown in a separate subplot.  There are multiple SAT and static pressure sensors in different parts of the HVAC system -- that's why those subplots have multiple traces.  By contrast, we have a single sensor for total building electric and steam demand.  The sensors are sampled every 15 minutes.   
 
-<img src="https://s3.amazonaws.com/cortex-blog-content/images/easy_example.png" width="1000">
+<img src="https://s3.amazonaws.com/cortex-blog-content/images/easy_example.png" width="100%">
 
 Looking at this sensor data, we observe a clear edge transition in most sensors when the building turns on around 12:00 AM: 
 
-1.  Supply air temperature falls to 50 degrees
-2.  Static pressure goes up to well above 0.0
-3.  Electric demand goes up from its baseline of 2000 kW
+
+1.  Supply air temperature falls to 50 degrees.
+2.  Static pressure goes up to well above 0.0.
+3.  Electric demand goes up from its baseline of 2000 kW.
 4.  Steam demand spikes significantly above 0.
 
 This is great.  This shows that there is something learnable.  If I just looked at this example, and others like it, I would say the building start time is the first edge across all the relevant HVAC signals. In this case, that is 12:00 AM. Simple. Right?
 
 Of course not. We didn't look at enough data.  This example is the best case scenario.  Often, some small portion of the HVAC system turns on early, before a human would actually say "the building HVAC systems started."   The plot below shows an example of that. 
 
-<img src="https://s3.amazonaws.com/cortex-blog-content/images/hard_example.png" width="1000">
+<img src="https://s3.amazonaws.com/cortex-blog-content/images/hard_example.png" width="100%">
 
 A couple of static pressure and SAT signals show an edge around 12:00 AM, but most of the other edges are around 5:00 AM.  In this case, as humans that understand building operations, we would say the building's HVAC began its startup sequence at 5:00 AM.  Just a few fans turned on at 12:00 AM, so that wasn't really the building's HVAC systems starting in any meaningful way.
 
@@ -52,7 +53,7 @@ In this case, the simple rule from above would fail because it would say 12:00 A
 
 This is good.  We're doing the human learning that is the precursor to machine learning.  But we need to look at more data.  After a more thorough look, we found (to the surprise of no one) that the story is more complicated.  Some nights the building is on all night, e.g. it's so cold that the HVAC systems ran all night.  Other days the HVAC system never turns on.  Here's an example of one such day when the building ran all night. 
 
-<img src="https://s3.amazonaws.com/cortex-blog-content/images/on_all_night.png" width="1000">
+<img src="https://s3.amazonaws.com/cortex-blog-content/images/on_all_night.png" width="100%">
 
 Inspecting the data, it seems that if there are very few edges, and the static pressure is high all night, then the building was on all night.  Alternatively, if there are very few edges and the static pressure is low all night, then the building was off all night.  
 
@@ -61,6 +62,7 @@ Further complicating matters is that different buildings have different sensors.
 ## Solution Skeleton
 
 In the end, we looked at hundreds of days across all of our buildings at various times of the year -- spring, summer, fall, winter, weekdays, weekends, holidays, buildings where there are lots of sensors, buildings where there are few sensors. After a while, a "solution skeleton" started to come together.  We thought we could build an automatic start time finder using two algorithms: 
+
 
 1.  **An edge finder algorithm.**  This would be an algorithm that, given a single time series, would identify sharp transitions (edges) in it.  
 2.  **A start time estimator from edges.** This would be an algorithm that, given a set of edges from all the sensors, would figure out the start time -- if there was one.  If not, it would tell us if the building was on or off all night. 
